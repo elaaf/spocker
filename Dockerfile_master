@@ -1,0 +1,3 @@
+FROM elaafshuja/spark:latest
+
+ENTRYPOINT start-master.sh && tail -f /spark/logs/spark*.out
