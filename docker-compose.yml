@@ -10,42 +10,42 @@ services:
             - "7077"
 
     worker1:
-        image: spark_slave
+        image: spark_worker
         container_name: "spark_worker_1"
         build: .
         ports:
         - "8081:8081"
     
     worker2:
-        image: spark_slave
+        image: spark_worker
         container_name: "spark_worker_2"
         build: .
         ports:
         - "8082:8081"
 
     worker3:
-        image: spark_slave
+        image: spark_worker
         container_name: "spark_worker_3"
         build: .
         ports:
         - "8083:8081"
     
     worker4:
-        image: spark_slave
+        image: spark_worker
         container_name: "spark_worker_4"
         build: .
         ports:
         - "8084:8081"
     
     worker5:
-        image: spark_slave
+        image: spark_worker
         container_name: "spark_worker_5"
         build: .
         ports:
         - "8085:8081"
 
     worker6:
-        image: spark_slave
+        image: spark_worker
         container_name: "spark_worker_6"
         build: .
         ports:

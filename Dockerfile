@@ -2,18 +2,17 @@ FROM alpine:latest
 
 LABEL maintainer="Elaaf Shuja <elaaf.shuja@gmail.com>"
 
-# Install misc requirements (Python, utils:nohup)
-RUN apk add --no-cache --update bash python3 coreutils procps
-
-
 # Install Spark
-RUN wget https://downloads.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz
-RUN mkdir spark && tar -xvf spark-3.1.2-bin-hadoop3.2.tgz -C ./spark --strip-components 1
-RUN rm spark*.tgz
+RUN wget https://downloads.apache.org/spark/spark-3.1.2/spark-3.1.2-bin-hadoop3.2.tgz \
+    && mkdir spark \
+    && tar -xvf spark-3.1.2-bin-hadoop3.2.tgz -C ./spark --strip-components 1 \
+    && rm spark*.tgz
 
 # Install Java
-RUN apk add --no-cache openjdk8
+RUN apk add --no-cache openjdk8-jre
 
+# Install misc requirements (Python, utils:nohup)
+RUN apk add --no-cache --update python3 bash coreutils procps
 
 # SET ENV VARIABLES
 ENV SPARK_HOME=/spark
