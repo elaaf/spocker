@@ -1,10 +1,8 @@
-version: "3.2"
+version: "3.9"
 
 services:
     spark-master:
         image: elaaf/spark-master
-        container_name: "spark-master"  
-        build: .
         ports:
             - "8080:8080"
         expose:
@@ -21,11 +19,12 @@ services:
                 reservations:
                     cpus: '1'
                     memory: 1G
-
+    
     spark-submit:
         image: elaaf/spark-submit
-        container_name: "spark-submit"
-        build: .
+        entrypoint: tail -f /dev/null
+        volumes:
+            - $PWD:/spocker
         deploy:
             mode: global
             placement:
@@ -38,20 +37,18 @@ services:
                 reservations:
                     cpus: '1'
                     memory: 1G
-
+    
     spark-worker:
         image: elaaf/spark-worker
-        container_name: "spark-worker"
-        build: .
         ports:
         - "8081:8081"
         deploy:
             mode: replicated
-            replicas: 2
+            replicas: 4
             placement:
+                max_replicas_per_node: 2
                 constraints:
-                    - "node.hostname==dg-spark-worker"
-                    - max_replicas_per_node: 2
+                    - "node.hostname!=dg-spark-master"
             resources:
                 limits:
                     cpus: '3'
@@ -59,19 +56,7 @@ services:
                 reservations:
                     cpus: '1'
                     memory: 1G
-
-
-    # spark-worker-1:
-    #     image: elaaf/spark-worker
-    #     container_name: "spark-worker-1"
-    #     build:
-    #         context: .
-    #         network: spark-net
-    #     ports:
-    #     - "8081:8081"
-    #     deploy:
-    #         mode: global
-    #         placement:
-    #             constraints:
-    #                 - node.hostname == *worker
-    
+networks:
+  spark-net:
+    driver: overlay
+    attachable: true
