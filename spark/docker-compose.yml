@@ -1,8 +1,17 @@
 version: "3.9"
 
+networks:
+    spark-net:
+        external: true
+        driver: overlay
+        attachable: true
+
+
 services:
     spark-master:
         image: elaaf/spark-master
+        networks: 
+            - spark-net
         ports:
             - "8080:8080"
         expose:
@@ -22,6 +31,8 @@ services:
     
     spark-submit:
         image: elaaf/spark-submit
+        networks: 
+            - spark-net
         entrypoint: tail -f /dev/null
         volumes:
             - $PWD:/spocker
@@ -40,6 +51,8 @@ services:
     
     spark-worker:
         image: elaaf/spark-worker
+        networks: 
+            - spark-net
         ports:
         - "8081:8081"
         deploy:
@@ -56,7 +69,3 @@ services:
                 reservations:
                     cpus: '1'
                     memory: 1G
-networks:
-  spark-net:
-    driver: overlay
-    attachable: true
