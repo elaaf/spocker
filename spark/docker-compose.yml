@@ -1,21 +1,22 @@
 version: "3.9"
 
 networks:
-    spark-net:
+    host:
+        name: host
         external: true
-        driver: overlay
-        attachable: true
 
 
 services:
     spark-master:
         image: elaaf/spark-master
         networks: 
-            - spark-net
+            - host
         ports:
             - "8080:8080"
         expose:
             - "7077"
+        extra_hosts:
+            - "dg-spark-master:10.51.100.65"
         deploy:
             mode: global
             placement:
@@ -28,38 +29,18 @@ services:
                 reservations:
                     cpus: '1'
                     memory: 1G
-    
-    spark-submit:
-        image: elaaf/spark-submit
-        networks: 
-            - spark-net
-        entrypoint: tail -f /dev/null
-        volumes:
-            - $PWD:/spocker
-        deploy:
-            mode: global
-            placement:
-                constraints:
-                    - "node.hostname==dg-spark-master"
-            resources:
-                limits:
-                    cpus: '2'
-                    memory: 4G
-                reservations:
-                    cpus: '1'
-                    memory: 1G
-    
     spark-worker:
         image: elaaf/spark-worker
         networks: 
-            - spark-net
+            - host
         ports:
-        - "8081:8081"
+            - "8081:8081"
+        extra_hosts:
+            - "dg-spark-master:10.51.100.65"
         deploy:
-            mode: replicated
-            replicas: 4
+            mode: global
             placement:
-                max_replicas_per_node: 2
+                max_replicas_per_node: 1
                 constraints:
                     - "node.hostname!=dg-spark-master"
             resources:
