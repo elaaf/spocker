@@ -4,19 +4,15 @@ networks:
     host:
         name: host
         external: true
+        attachable: true
 
 
 services:
     spark-master:
         image: elaaf/spark-master
-        networks: 
+        hostname: 10.51.100.65
+        networks:
             - host
-        ports:
-            - "8080:8080"
-        expose:
-            - "7077"
-        extra_hosts:
-            - "dg-spark-master:10.51.100.65"
         deploy:
             mode: global
             placement:
@@ -29,18 +25,16 @@ services:
                 reservations:
                     cpus: '1'
                     memory: 1G
+
     spark-worker:
         image: elaaf/spark-worker
-        networks: 
+        networks:
             - host
-        ports:
-            - "8081:8081"
-        extra_hosts:
-            - "dg-spark-master:10.51.100.65"
+        environment:
+             - SPARK_MASTER_URL=spark://10.51.100.65:7077
         deploy:
             mode: global
             placement:
-                max_replicas_per_node: 1
                 constraints:
                     - "node.hostname!=dg-spark-master"
             resources:
