@@ -1,3 +1,5 @@
+# >>>>>>>>>>>>>>>>>>>> DO NOT USE: INCOMPLETE <<<<<<<<<<<<<<<<<<<<
+
 FROM elaaf/alpine:latest
 LABEL maintainer="Elaaf Shuja <elaaf.shuja@gmail.com>"
 
@@ -5,3 +7,5 @@ LABEL maintainer="Elaaf Shuja <elaaf.shuja@gmail.com>"
 
 # Final Stuff
 ENTRYPOINT ["/bin/bash"]
+
+# >>>>>>>>>>>>>>>>>>>> DO NOT USE: INCOMPLETE <<<<<<<<<<<<<<<<<<<<
