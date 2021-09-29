@@ -1,4 +1,4 @@
-# Socker - Multi-Host Dockerized Spark using Docker Swarm
+# Spocker - Multi-Host Dockerized Spark using Docker Swarm
 
 Hi there, this a step-by-step guide to get a Dockerized Spark (StandAlone) up-and-running on a cluster using the Docker Swarm which is a multi-host container orchestartion tool.
 
@@ -14,4 +14,8 @@ Hi there, this a step-by-step guide to get a Dockerized Spark (StandAlone) up-an
 3. Submit a spark-job to the Spark cluster.
 
 
-### 
+## 1. Setup Docker Swarm
+
+## 2. Deploy Spark to Docker Swarm
+
+## 3. Submit a Spark job
