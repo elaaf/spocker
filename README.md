@@ -28,7 +28,7 @@ Install docker from [here](https://docs.docker.com/engine/install/) if required.
 
 ## Single-Host Spark Standalone
 
-For a single-node Spark Standalone setup, run the following commands.
+To deploy and run Spark (Standalone) inside a single machine(host), run the following commands.
 This runs the spark-master, and spark-worker containers on the same machine/docker-host.
 
 ### 1. Clone this repo
@@ -62,12 +62,6 @@ If the deployement was successful, the Spark WebUI should be accessible @ YOUR-I
 
 ### 3. Submit a job to the single-host Spark cluster
 
-Pull the latest spark-submit image.
-
-```bash
-docker pull elaaf/spark-submit:latest
-```
-
 Start the spark-submit container, providing the SPARK_MASTER_URL (optional for single-host: defaults to `spark://spark-master:7077`) and JOB_PATH.<br>
 The contianer will run till the submitted spark-job's life, hosting the spark-driver inside it.
 
@@ -85,6 +79,8 @@ The Spark WebUI will show a running application and will move it to completed on
 
 
 ## Multi-Host Spark Standalone
+
+To deploy and run Spark (Standalone) across a multiple machine(host), follow the following steps:
 
 - Setup the Docker Swarm
 - Execute the `docker stack` deployment configuration

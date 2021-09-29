@@ -10,37 +10,39 @@ networks:
 services:
     spark-master:
         image: elaaf/spark-master
-        hostname: 10.51.100.65
+        hostname: ${SPARK_MASTER_IP}
         networks:
             - host
         deploy:
             mode: global
             placement:
                 constraints:
-                    - "node.hostname==dg-spark-master"
+                    - "node.role==manager"
             resources:
                 limits:
                     cpus: '2'
                     memory: 4G
                 reservations:
                     cpus: '1'
-                    memory: 1G
+                    memory: 2G
 
     spark-worker:
         image: elaaf/spark-worker
         networks:
             - host
         environment:
-             - SPARK_MASTER_URL=spark://10.51.100.65:7077
+             - SPARK_WORKER_CPU=1
+             - SPARK_WORKER_MEMORY=2G
+             - SPARK_MASTER_URL=spark://${SPARK_MASTER_IP}:7077
         deploy:
             mode: global
             placement:
                 constraints:
-                    - "node.hostname!=dg-spark-master"
+                    - "node.role==worker"
             resources:
                 limits:
-                    cpus: '3'
+                    cpus: '2'
                     memory: 8G
                 reservations:
                     cpus: '1'
-                    memory: 1G
+                    memory: 2G

@@ -1,3 +1,6 @@
 FROM elaaf/spark-base:latest
 
-ENTRYPOINT $SPARK_HOME/sbin/start-worker.sh $SPARK_MASTER_URL && tail -f $SPARK_HOME/logs/spark*.out
+ENV SPARK_WORKER_CPU=2
+ENV SPARK_WORKER_MEMORY=8G
+
+ENTRYPOINT $SPARK_HOME/sbin/start-worker.sh $SPARK_MASTER_URL -c $SPARK_WORKER_CPU -m $SPARK_WORKER_MEMORY && tail -f $SPARK_HOME/logs/spark*.out
