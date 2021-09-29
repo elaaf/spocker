@@ -45,11 +45,16 @@ cd spocker
 docker-compose -f spark/single-host-docker-compose/docker-compose.yml up
 ```
 This will pull the latest images for spark-master and spark-worker.
-A [docker bridge network](https://docs.docker.com/network/bridge/) named `spark-net` will be created and joined by the containers.<br>
+A [docker bridge network](https://docs.docker.com/network/bridge/) named `spark-net` will be created and joined by the containers.
+
+![](images/spocker-single-host-architecture.png)
+
+<br>
 
 Three containers will be started on the host-machine:
 - 1 x Spark-Master: WebUI @ Your-Machine-IP:8080
 - 2 x Spark-Worker WEBUI @ Your-Machine-IP:8081 and Your-Machine-IP:8082
+
 
 If the deployement was successful, the Spark WebUI should be accessible @ YOUR-IP:8080 and should look something like this:
 
