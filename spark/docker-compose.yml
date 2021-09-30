@@ -1,46 +1,53 @@
 version: "3.9"
 
 networks:
-    host:
-        name: host
-        external: true
+    spark-net:
+        name: spark-net
+        driver: overlay
+        external: false
         attachable: true
 
 
 services:
     spark-master:
         image: elaaf/spark-master
-        hostname: 10.51.100.65
+        hostname: spark-master
         networks:
-            - host
+            - spark-net
+        ports:
+            - "8080:8080"
         deploy:
             mode: global
             placement:
                 constraints:
-                    - "node.hostname==dg-spark-master"
+                    - "node.role==manager"
             resources:
                 limits:
-                    cpus: '2'
-                    memory: 4G
+                    cpus: '4'
+                    memory: 8G
                 reservations:
                     cpus: '1'
-                    memory: 1G
+                    memory: 2G
 
     spark-worker:
         image: elaaf/spark-worker
         networks:
-            - host
+            - spark-net
+        ports:
+            - "8081:8081"
         environment:
-             - SPARK_MASTER_URL=spark://10.51.100.65:7077
+             - SPARK_WORKER_CPU=8
+             - SPARK_WORKER_MEMORY=30G
+             - SPARK_MASTER_URL=spark://spark-master:7077
         deploy:
             mode: global
             placement:
                 constraints:
-                    - "node.hostname!=dg-spark-master"
+                    - "node.role==worker"
             resources:
                 limits:
-                    cpus: '3'
-                    memory: 8G
+                    cpus: '8'
+                    memory: 30G
                 reservations:
                     cpus: '1'
-                    memory: 1G
+                    memory: 2G
