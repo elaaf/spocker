@@ -10,6 +10,22 @@ This repository refers to containerized Spark as Spocker.<br>
 *Kubernetes should be preferred as the orchestrator for prodcution systems over Docker-Swarm.*<br><br>
 
 
+## Contents
+- [Single-Host Spark using Docker](#single-host-spark-using-docker)
+  * [Requirements](#requirements)
+  * [Deployment Steps](#steps)
+    * [1. Clone this repository](#1-clone-this-repository)
+    * [2. Execute the docker-compose.yml](#2-execute-the-docker-composeyml)
+    * [3. Submit a job to the single-host Spark cluster](#3-submit-a-job-to-the-single-host-spark-cluster)
+- [Multi-Host Spark using Docker Swarm](#multi-host-spark-using-docker-swarm)
+  * [Requirements](#requirements-1)
+  * [Deployment Steps](#steps-1)
+    * [1. Clone this repository](#1-clone-this-repository-1)
+    * [2. Setup Docker Swarm](#2-setup-docker-swarm)
+    * [3. Deploy Spark to Docker Swarm](#3-deploy-spark-to-docker-swarm)
+    * [4. Submit a Spark job](#4-submit-a-spark-job)
+  * [TO-DO:](#to-do-)
+
 
 # Single-Host Spark using Docker
 
