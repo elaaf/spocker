@@ -30,3 +30,5 @@ services:
 networks:
         spark-net:
                 name: spark-net
+                external: false
+                attachable: true
